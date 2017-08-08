@@ -5,9 +5,10 @@ import { StackNavigator } from 'react-navigation';
 import store from './reducers/index';
 import App from './containers/App';
 import Login from './containers/Login';
+import Loading from './components/Loading';
 
 // uncomment this to hide simulator warnings
-// console.disableYellowBox = true;
+console.disableYellowBox = true;
 
 const uiTheme = {
   palette: {
@@ -51,6 +52,7 @@ class Halley extends Component {
   }
   render() {
     const RootNav = StackNavigator({
+      Loading: { screen: Loading },
       App: { screen: App },
       Login: { screen: Login },
     },

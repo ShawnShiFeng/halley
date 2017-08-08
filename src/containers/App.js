@@ -4,6 +4,9 @@ import {
   View,
   Text,
 } from 'react-native';
+import {
+  StackNavigatior,
+} from 'react-navigation';
 
 const styles = StyleSheet.create({
   container: {
@@ -25,13 +28,10 @@ const styles = StyleSheet.create({
 });
 
 class App extends Component {
-  constructor(props) {
-    super(props);
+  static navigationOptions = {
+    title: 'Welcome',
+  };
 
-    this.state = {
-      hi: 'hi',
-    };
-  }
   render() {
     return (
       <View style={styles.container}>

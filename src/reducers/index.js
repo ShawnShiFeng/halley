@@ -1,6 +1,8 @@
-import { combineReducers } from 'redux';
-import { createStore } from 'redux';
-import { LOGOUT } from '../constants';
+import {
+  combineReducers,
+  createStore,
+} from 'redux';
+// import { LOGOUT } from '../constants';
 import user from './user';
 import group from './group';
 import topic from './topic';
@@ -17,18 +19,18 @@ import directMessage from './directMessage';
 
 const allReducers = combineReducers({
   banner,
-  user,
-  group,
-  topic,
-  media,
-  modal,
-  search,
-  session,
-  message,
-  attachment,
-  settings,
-  notification,
-  directMessage,
+  // user,
+  // group,
+  // topic,
+  // media,
+  // modal,
+  // search,
+  // session,
+  // message,
+  // attachment,
+  // settings,
+  // notification,
+  // directMessage,
 });
 
 const store = createStore(allReducers);
