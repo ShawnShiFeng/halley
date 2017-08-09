@@ -45,7 +45,14 @@ export default function (state = initialState, action) {
         ...state,
         authenticating: true,
         phoneNumber: action.phoneNumber,
-      }
+      };
+    }
+    case 'AUTHENTICATED': {
+      return {
+        ...state,
+        authenticating: false,
+        authenticated: true,
+      };
     }
     // case LOGIN: {
     //   const user = action.response.entities.users[action.response.result];

@@ -5,18 +5,26 @@ import {
   View,
   Text,
   StyleSheet,
+  Image,
 } from 'react-native';
 // import { Button } from 'react-native-material-design';
 import {
   authenticating,
+  updateUserProfile,
 } from '../actions/session';
 // components
 import PhoneInput from './PhoneInput';
 import CodeInput from './CodeInput';
 
 const styles = StyleSheet.create({
+  backgroundImage: {
+    flex: 1,
+    width: null,
+    height: null,
+    backgroundColor: 'transparent',
+  },
   container: {
-    backgroundColor: 'orange',
+    // backgroundColor: 'orange',
     width: '100%',
     height: '100%',
   },
@@ -43,7 +51,7 @@ const styles = StyleSheet.create({
   loginButtonSection: {
     width: '100%',
     flex: 3,
-    backgroundColor: 'orange',
+    // backgroundColor: 'orange',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -68,19 +76,21 @@ class Login extends Component {
   render() {
     const { session } = this.props;
     return (
-      <View style={styles.container} >
-        <View style={styles.picSection} >
-          <Text>place holder for picture</Text>
+      <Image source={require('../../public/purple.png')} style={styles.backgroundImage}>
+        <View style={styles.container} >
+          <View style={styles.picSection} >
+            <Text>place holder for picture</Text>
+          </View>
+          <View style={styles.textSection} >
+            <Text style={styles.banner} >GROUP CHAT LOVE</Text>
+            <Text style={styles.banner} >REIMAGINED</Text>
+          </View>
+          <View style={styles.loginButtonSection} >
+            {session.authenticating ?  <CodeInput navigation={this.props.navigation}/> : <PhoneInput /> }
+            <Text style={styles.signup} >Sign up here</Text>
+          </View>
         </View>
-        <View style={styles.textSection} >
-          <Text style={styles.banner} >GROUP CHAT LOVE</Text>
-          <Text style={styles.banner} >REIMAGINED</Text>
-        </View>
-        <View style={styles.loginButtonSection} >
-          {session.authenticating ?  <CodeInput /> : <PhoneInput /> }
-          <Text style={styles.signup} >Sign up here</Text>
-        </View>
-      </View>
+      </Image>
     );
   }
 }
@@ -94,6 +104,7 @@ const mapStateToProps = (state) => {
 const matchDispatchToProps = (dispatch) => {
   return bindActionCreators({
     authenticating,
+    updateUserProfile,
   }, dispatch);
 };
 export default connect(mapStateToProps, matchDispatchToProps)(Login);

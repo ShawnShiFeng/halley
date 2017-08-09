@@ -3,8 +3,11 @@ import { Provider } from 'react-redux';
 import { ThemeProvider } from 'react-native-material-ui';
 import { StackNavigator } from 'react-navigation';
 import store from './reducers/index';
+
+// Component
 import App from './containers/App';
 import Login from './components/Login';
+import Signup from './components/Signup';
 import Loading from './components/Loading';
 import NavBar from './components/NavBar';
 import NavDrawer from './containers/NavDrawer';
@@ -55,8 +58,9 @@ class Halley extends Component {
   render() {
     const RootNav = StackNavigator({
       Loading: { screen: Loading },
-      Login: { screen: Login },
       App: { screen: App },
+      Login: { screen: Login },
+      Signup:{ screen: Signup },
       NavBar: { screen: NavBar },
       NavDrawer: { screen: NavDrawer },
     },

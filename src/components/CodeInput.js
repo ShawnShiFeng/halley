@@ -10,15 +10,13 @@ import {
   StyleSheet,
 } from 'react-native';
 import {
-  authenticating,
-  updateUserProfile,
+  authenticated,
 } from '../actions/session';
+import {
+  updateUserProfile,
+} from '../actions/user';
 
-//Component
-import Signup from './Signup';
-
-
-class PhoneInput extends Component {
+class CodeInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -42,7 +40,8 @@ class PhoneInput extends Component {
         .then((response) => {
           console.log('successfully received phone_code validate confirmation: ', response);
           this.props.updateUserProfile(response.data.user);
-          console.log('result: ', this.props.user.user);
+          this.props.authenticated();
+          this.props.navigation.navigate('App');
         })
         .catch((err) => {
           console.error('failed to send loop code to the server: ', err);
@@ -76,14 +75,17 @@ class PhoneInput extends Component {
         fontSize: 30,
         textAlign: 'center',
       },
+      banner: {
+        color: 'white',
+      }
     });
     return (
       <View style={styles.container}>
-        <Text>VALIDATION CODE</Text>
+        <Text style={styles.banner}>VALIDATION CODE</Text>
         <View style={styles.inputBox}>
           <View style={styles.phoneCodeBox}>
             <TextInput
-              style={{ fontSize: 30, height: 40, borderColor: 'gray', borderWidth: 1 }}
+              style={{ fontSize: 30, height: 40, borderColor: 'white', borderWidth: 1 }}
               onChangeText={
                 firstDigit => {
                   this.setState({ firstDigit });
@@ -97,7 +99,7 @@ class PhoneInput extends Component {
           </View>
           <View style={styles.phoneCodeBox}>
             <TextInput
-              style={{ fontSize: 30, height: 40, borderColor: 'gray', borderWidth: 1 }}
+              style={{ fontSize: 30, height: 40, borderColor: 'white', borderWidth: 1 }}
               onChangeText={
                 secondDigit => {
                   this.setState({ secondDigit });
@@ -114,7 +116,7 @@ class PhoneInput extends Component {
           </View>
           <View style={styles.phoneCodeBox}>
             <TextInput
-              style={{ fontSize: 30, height: 40, borderColor: 'gray', borderWidth: 1 }}
+              style={{ fontSize: 30, height: 40, borderColor: 'white', borderWidth: 1 }}
               onChangeText={
                 thirdDigit => {
                   this.setState({ thirdDigit });
@@ -128,7 +130,7 @@ class PhoneInput extends Component {
           </View>
           <View style={styles.phoneCodeBox}>
             <TextInput
-              style={{ fontSize: 30, height: 40, borderColor: 'gray', borderWidth: 1 }}
+              style={{ fontSize: 30, height: 40, borderColor: 'white', borderWidth: 1 }}
               onChangeText={
                 fourthDigit => {
                   this.setState({ fourthDigit });
@@ -140,8 +142,8 @@ class PhoneInput extends Component {
             />
           </View>
         </View>
-        <Text>You should receive an SMS validation code</Text>
-        <Text>within 60 seconds.</Text>
+        <Text style={styles.banner}>You should receive an SMS validation code</Text>
+        <Text style={styles.banner}>within 60 seconds.</Text>
         <Button
           onPress={this.sendPhoneCode}
           title="Submit"
@@ -162,9 +164,9 @@ const mapStateToProps = (state) => {
 
 const matchDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    authenticating,
+    authenticated,
     updateUserProfile,
   }, dispatch);
 };
 
-export default connect(mapStateToProps, matchDispatchToProps)(PhoneInput);
+export default connect(mapStateToProps, matchDispatchToProps)(CodeInput);

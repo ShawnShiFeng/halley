@@ -61,7 +61,7 @@ class PhoneInput extends Component {
       },
       countryCodeBox: {
         flex: 1,
-        borderColor: 'gray',
+        borderColor: 'white',
         borderWidth: 1,
       },
       countryCodeText: {
@@ -73,18 +73,21 @@ class PhoneInput extends Component {
       },
       phoneNumberText: {
         fontSize: 30,
+      },
+      banner: {
+        color: 'white',
       }
     });
     return (
       <View>
-        <Text>ENTER YOUR PHONE NUMBER TO LOG IN</Text>
+        <Text style={styles.banner}>ENTER YOUR PHONE NUMBER TO LOG IN</Text>
         <View style={styles.inputBox}>
           <View style={styles.countryCodeBox}>
             <Text style={styles.countryCodeText}>{this.state.countryCode}</Text>
           </View>
           <View style={styles.phoneNumberBox}>
             <TextInput
-              style={{ fontSize: 30, height: 40, borderColor: 'gray', borderWidth: 1 }}
+              style={{ fontSize: 30, height: 40, borderColor: 'white', borderWidth: 1 }}
               onChangeText={phoneNumber => this.setState({ phoneNumber })}
               value={this.state.phoneNumber}
               maxLength={10}
