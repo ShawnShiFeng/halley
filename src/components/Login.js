@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   View,
   Text,
   StyleSheet,
-  TextInput,
-  Button,
 } from 'react-native';
 // import { Button } from 'react-native-material-design';
+import {
+  authenticating,
+} from '../actions/session';
+// components
 import PhoneInput from './PhoneInput';
-import axios from 'axios';
+import CodeInput from './CodeInput';
 
 const styles = StyleSheet.create({
   container: {
@@ -72,7 +76,7 @@ class Login extends Component {
           <Text style={styles.banner} >REIMAGINED</Text>
         </View>
         <View style={styles.loginButtonSection} >
-          <PhoneInput />
+          {authenticating ?  <PhoneInput /> : <CodeInput />}
           <Text style={styles.signup} >Sign up here</Text>
         </View>
       </View>
@@ -80,4 +84,15 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapStateToProps = (state) => {
+  return {
+    session: state.session,
+  };
+};
+
+const matchDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    authenticating,
+  }, dispatch);
+};
+export default connect(mapStateToProps, matchDispatchToProps)(Login);

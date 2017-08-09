@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import axios from 'axios';
 import {
   View,
   Text,
@@ -6,7 +9,9 @@ import {
   TextInput,
   StyleSheet,
 } from 'react-native';
-import axios from 'axios';
+import {
+  authenticating,
+} from '../actions/session';
 
 
 class PhoneInput extends Component {
@@ -21,16 +26,13 @@ class PhoneInput extends Component {
   }
 
   sendPhoneNumber() {
-    // sample number check
-    if (this.state.phoneNumber.length >= 9) {
+    if (this.validateNumberFormatUS(this.state.phoneNumber)) {
       const data = {
         phone_number: this.state.countryCode + this.state.phoneNumber,
       };
       axios.post('http://127.0.0.1:4000/v1/sessions/code', data)
         .then((response) => {
-        // if the number return is the same as the one sent
-        // dispatch and store response.data.phone_number to redux
-        // redirect to CodeInput page
+          this.props.authenticating(response.data.phone_number);
           console.log('successfully received response after sending phone number', response);
         })
         .catch((err) => {
@@ -43,8 +45,10 @@ class PhoneInput extends Component {
 
   validateNumberFormatUS (numStr) {
     if (numStr.length === 10) {
-      return true;
-      }
+      if (!isNaN(parseInt(numStr, 10)) && typeof(parseInt(numStr, 10)) === 'number') {
+        return true;
+      } 
+    }
     return false;
   }
 
@@ -96,4 +100,16 @@ class PhoneInput extends Component {
   }
 }
 
-export default PhoneInput;
+const mapStateToProps = (state) => {
+  return {
+    session: state.session,
+  };
+};
+
+const matchDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+    authenticating,
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, matchDispatchToProps)(PhoneInput);

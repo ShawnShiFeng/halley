@@ -3,29 +3,29 @@ import {
   createStore,
 } from 'redux';
 // import { LOGOUT } from '../constants';
-import user from './user';
-import group from './group';
-import topic from './topic';
-import media from './media';
-import modal from './modal';
-import banner from './banner';
-import search from './search';
+// import user from './user';
+// import group from './group';
+// import topic from './topic';
+// import media from './media';
+// import modal from './modal';
+// import banner from './banner';
+// import search from './search';
 import session from './session';
-import message from './message';
-import attachment from './attachment';
-import settings from './settings';
-import notification from './notification';
-import directMessage from './directMessage';
+// import message from './message';
+// import attachment from './attachment';
+// import settings from './settings';
+// import notification from './notification';
+// import directMessage from './directMessage';
 
 const allReducers = combineReducers({
-  banner,
+  // banner,
   // user,
   // group,
   // topic,
   // media,
   // modal,
   // search,
-  // session,
+  session,
   // message,
   // attachment,
   // settings,
