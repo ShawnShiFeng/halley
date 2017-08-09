@@ -18,25 +18,39 @@ class PhoneInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      firstDigit: -1,
-      secondDigit: -1,
-      thirdDigit: -1,
-      fourthDigit: -1,
+      firstDigit: '',
+      secondDigit: '',
+      thirdDigit: '',
+      fourthDigit: '',
     };
-    this.sendLoopCode = this.sendLoopCode.bind(this);
-    this.validateLoopCode = this.validateLoopCode.bind(this);
+    this.sendPhoneCode = this.sendPhoneCode.bind(this);
+    this.validatePhoneCode = this.validatePhoneCode.bind(this);
   }
 
-  sendLoopCode() {
+  sendPhoneCode() {
+    const data = {
+      phone_code: `${this.state.firstDigit}${this.state.secondDigit}${this.state.thirdDigit}${this.state.fourthDigit}`,
+      phone_number: this.props.session.phoneNumber,
+    }
+    console.log('data: ', data);
+    if(this.validatePhoneCode(data.phone_code)) {
+      axios.post('http://127.0.0.1:4000/v1/sessions', data)
+        .then((response) => {
+          console.log('successfully received phone_code validate confirmation: ', response);
+        })
+        .catch((err) => {
+          console.error('failed to send loop code to the server: ', err);
+        })
+    }
   }
 
-  validateLoopCode (loopCode) {
-    // if (numStr.length === 10) {
-    //   if (!isNaN(parseInt(numStr, 10)) && typeof(parseInt(numStr, 10)) === 'number') {
-    //     return true;
-    //   } 
-    // }
-    // return false;
+  validatePhoneCode (phoneCode) {
+    if (phoneCode.length === 4) {
+      if (!isNaN(parseInt(phoneCode, 10)) && typeof(parseInt(phoneCode, 10)) === 'number') {
+        return true;
+      } 
+    }
+    return false;
   }
 
   render() {
@@ -48,11 +62,11 @@ class PhoneInput extends Component {
         width: '65%',
         flexDirection: 'row',
       },
-      loopCodeBox: {
+      phoneCodeBox: {
         margin: '5%',
         flex: 1,
       },
-      loopCodeText: {
+      phoneCodeText: {
         fontSize: 30,
         textAlign: 'center',
       },
@@ -61,43 +75,69 @@ class PhoneInput extends Component {
       <View style={styles.container}>
         <Text>VALIDATION CODE</Text>
         <View style={styles.inputBox}>
-          <View style={styles.loopCodeBox}>
+          <View style={styles.phoneCodeBox}>
             <TextInput
               style={{ fontSize: 30, height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={firstDigit => this.setState({ firstDigit })}
+              onChangeText={
+                firstDigit => {
+                  this.setState({ firstDigit });
+                  this.refs.secondInput.focus(); 
+                }
+              }
               value={this.state.firstDigit}
               maxLength={1}
+              autoFocus={true}
             />
           </View>
-          <View style={styles.loopCodeBox}>
+          <View style={styles.phoneCodeBox}>
             <TextInput
               style={{ fontSize: 30, height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={secondDigit => this.setState({ secondDigit })}
+              onChangeText={
+                secondDigit => {
+                  this.setState({ secondDigit });
+                  this.refs.thirdInput.focus(); 
+                  }
+              }
               value={this.state.secondDigit}
               maxLength={1}
+              ref="secondInput"
+              onSubmitEditing={(event) => { 
+                this.refs.thirdInput.focus(); 
+              }}
             />
           </View>
-          <View style={styles.loopCodeBox}>
+          <View style={styles.phoneCodeBox}>
             <TextInput
               style={{ fontSize: 30, height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={thirdDigit => this.setState({ thirdDigit })}
+              onChangeText={
+                thirdDigit => {
+                  this.setState({ thirdDigit });
+                  this.refs.fourthInput.focus(); 
+                  }
+              }
               value={this.state.thirdDigit}
               maxLength={1}
+              ref="thirdInput"
             />
           </View>
-          <View style={styles.loopCodeBox}>
+          <View style={styles.phoneCodeBox}>
             <TextInput
               style={{ fontSize: 30, height: 40, borderColor: 'gray', borderWidth: 1 }}
-              onChangeText={fourthDigit => this.setState({ fourthDigit })}
+              onChangeText={
+                fourthDigit => {
+                  this.setState({ fourthDigit });
+                }
+              }
               value={this.state.fourthDigit}
               maxLength={1}
+              ref="fourthInput"
             />
           </View>
         </View>
         <Text>You should receive an SMS validation code</Text>
         <Text>within 60 seconds.</Text>
         <Button
-          onPress={this.sendLoopCode}
+          onPress={this.sendPhoneCode}
           title="Submit"
           color="white"
           backgroundColor="black"

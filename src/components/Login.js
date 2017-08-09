@@ -66,6 +66,7 @@ class Login extends Component {
   }
 
   render() {
+    const { session } = this.props;
     return (
       <View style={styles.container} >
         <View style={styles.picSection} >
@@ -76,7 +77,7 @@ class Login extends Component {
           <Text style={styles.banner} >REIMAGINED</Text>
         </View>
         <View style={styles.loginButtonSection} >
-          {authenticating ?  <PhoneInput /> : <CodeInput />}
+          {session.authenticating ?  <CodeInput /> : <PhoneInput /> }
           <Text style={styles.signup} >Sign up here</Text>
         </View>
       </View>

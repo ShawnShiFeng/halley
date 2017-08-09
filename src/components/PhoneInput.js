@@ -28,11 +28,13 @@ class PhoneInput extends Component {
   sendPhoneNumber() {
     if (this.validateNumberFormatUS(this.state.phoneNumber)) {
       const data = {
-        phone_number: this.state.countryCode + this.state.phoneNumber,
+        phone_number: `${this.state.countryCode}${this.state.phoneNumber}`,
       };
       axios.post('http://127.0.0.1:4000/v1/sessions/code', data)
         .then((response) => {
+          console.log('before: ', this.props.session.authenticating);
           this.props.authenticating(response.data.phone_number);
+          console.log('after: ', this.props.session.authenticating);
           console.log('successfully received response after sending phone number', response);
         })
         .catch((err) => {
