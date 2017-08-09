@@ -4,8 +4,10 @@ import { ThemeProvider } from 'react-native-material-ui';
 import { StackNavigator } from 'react-navigation';
 import store from './reducers/index';
 import App from './containers/App';
-import Login from './containers/Login';
+import Login from './components/Login';
 import Loading from './components/Loading';
+import NavBar from './components/NavBar';
+import NavDrawer from './containers/NavDrawer';
 
 // uncomment this to hide simulator warnings
 console.disableYellowBox = true;
@@ -53,8 +55,10 @@ class Halley extends Component {
   render() {
     const RootNav = StackNavigator({
       Loading: { screen: Loading },
-      App: { screen: App },
       Login: { screen: Login },
+      App: { screen: App },
+      NavBar: { screen: NavBar },
+      NavDrawer: { screen: NavDrawer },
     },
     {
       transitionConfig: TransitionConfiguration,

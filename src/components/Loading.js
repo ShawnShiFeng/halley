@@ -3,6 +3,9 @@ import {
   View,
   Image,
 } from 'react-native';
+import {
+  StackNavigatior,
+} from 'react-navigation';
 
 class Loading extends Component {
   constructor(props) {
@@ -10,7 +13,6 @@ class Loading extends Component {
     this.state = {
       example: 'example',
     };
-
     this.loadMainPage = this.loadMainPage.bind(this);
   }
   componentDidMount() {
@@ -18,14 +20,18 @@ class Loading extends Component {
   }
 
   loadMainPage() {
-    const { navigate } = this.props.navigation;
+    const test = false;
     setTimeout(() => {
-      navigate('App');
+      // if loggedin then go to app
+      if (test) {
+        this.props.navigation.navigate('App');
+      } else {
+        this.props.navigation.navigate('Login');
+      }
     }, 2000);
   }
 
   render() {
-    const { navigate } = this.props.navigation;
     return (
       <View>
         <Image

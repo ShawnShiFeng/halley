@@ -7,6 +7,7 @@ import {
 import {
   StackNavigatior,
 } from 'react-navigation';
+import NavBar from '../components/NavBar';
 
 const styles = StyleSheet.create({
   container: {
@@ -28,13 +29,14 @@ const styles = StyleSheet.create({
 });
 
 class App extends Component {
-  static navigationOptions = {
-    title: 'Welcome',
-  };
+  // static navigationOptions = {
+  //   title: 'Welcome',
+  // };
 
   render() {
     return (
       <View style={styles.container}>
+        <NavBar navigation={ this.props.navigation }/>
         <Text>from App.js</Text>
         <Text style={styles.welcome}>
           Welcome to LOOP!
