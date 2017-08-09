@@ -3,11 +3,20 @@ import {
   StyleSheet,
   View,
   Text,
+  Image,
+  Button,
 } from 'react-native';
-import {
-  StackNavigatior,
-} from 'react-navigation';
+import Drawer from 'react-native-drawer';
+
+// Component
 import NavBar from '../components/NavBar';
+import Signup from '../components/Signup';
+import ControlPanel from '../components/ControlPanel';
+import NavDrawer from './NavDrawer';
+import GroupMessage from '../components/GroupMessage';
+import DirectMessage from '../components/DirectMessage';
+import ChatBox from '../components/ChatBox';
+
 
 const styles = StyleSheet.create({
   container: {
@@ -26,28 +35,66 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
+  messageBox: {
+    top: 0,
+    flex: 14,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  chatBox: {
+    flex: 1,
+    width: '100%',
+  },
 });
 
 class App extends Component {
-  // static navigationOptions = {
-  //   title: 'Welcome',
-  // };
+  static navigationOptions = {
+    title: 'Welcome',
+    headerLeft: null,
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      toggled: false,
+    };
+    this.closeDrawer = this.closeDrawer.bind(this);
+    this.openDrawer = this.openDrawer.bind(this);
+    this.toggleDrawer = this.toggleDrawer.bind(this);
+  }
+
+
+  toggleDrawer() {
+    this.state.toggled ? this._drawer.close() : this._drawer.open();
+  }
+
+
+  closeDrawer() {
+    this.setState({ toggled: false });
+  }
+
+
+  openDrawer() {
+    console.log('hi: ', this.state.toggled);
+    this.setState({ toggled: true });
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <NavBar navigation={ this.props.navigation }/>
-        <Text>from App.js</Text>
-        <Text style={styles.welcome}>
-          Welcome to LOOP!
-        </Text>
-        <Text style={styles.instructions}>
-          set up react native loop client
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
+        <NavBar navigation={this.props.navigation} />
+        <Drawer
+          open={this.state.toggled}
+          type="overlay"
+          ref={(ref) => { this._drawer = ref; }}
+          content={<View style={{ backgroundColor: 'blue', height: 1000 }} />}
+        />
+        <View style={styles.messageBox}>
+          <DirectMessage />
+        </View>
+        <View style={styles.chatBox}>
+          <ChatBox />
+        </View>
       </View>
     );
   }

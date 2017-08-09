@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import { ThemeProvider } from 'react-native-material-ui';
-import { StackNavigator } from 'react-navigation';
+import {
+  StackNavigator,
+  // DrawerNavigator,
+} from 'react-navigation';
 import store from './reducers/index';
 
 // Component
@@ -57,16 +60,17 @@ class Halley extends Component {
   }
   render() {
     const RootNav = StackNavigator({
-      Loading: { screen: Loading },
+      // Loading: { screen: Loading },
       App: { screen: App },
-      Login: { screen: Login },
-      Signup:{ screen: Signup },
+      // Login: { screen: Login },
+      // Signup: { screen: Signup },
       NavBar: { screen: NavBar },
       NavDrawer: { screen: NavDrawer },
     },
     {
       transitionConfig: TransitionConfiguration,
     });
+
     return (
       <ThemeProvider uiTheme={uiTheme}>
         <Provider store={store}>

@@ -7,11 +7,9 @@ import {
   StyleSheet,
   Image,
 } from 'react-native';
-// import { Button } from 'react-native-material-design';
 import {
-  authenticating,
-  updateUserProfile,
 } from '../actions/session';
+
 // components
 import PhoneInput from './PhoneInput';
 import CodeInput from './CodeInput';
@@ -66,15 +64,15 @@ const styles = StyleSheet.create({
 });
 
 class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      hi: 'hi',
-    };
-  }
+  static navigationOptions = {
+    headerLeft: null,
+  };
 
   render() {
-    const { session } = this.props;
+    const { session, navigation } = this.props;
+    if (session.authenticated) {
+      navigation.navigate('App');
+    }
     return (
       <Image source={require('../../public/purple.png')} style={styles.backgroundImage}>
         <View style={styles.container} >
@@ -86,7 +84,9 @@ class Login extends Component {
             <Text style={styles.banner} >REIMAGINED</Text>
           </View>
           <View style={styles.loginButtonSection} >
-            {session.authenticating ?  <CodeInput navigation={this.props.navigation}/> : <PhoneInput /> }
+            {session.authenticating ?
+              <CodeInput navigation={this.props.navigation} />
+              : <PhoneInput /> }
             <Text style={styles.signup} >Sign up here</Text>
           </View>
         </View>
@@ -103,8 +103,6 @@ const mapStateToProps = (state) => {
 
 const matchDispatchToProps = (dispatch) => {
   return bindActionCreators({
-    authenticating,
-    updateUserProfile,
   }, dispatch);
 };
 export default connect(mapStateToProps, matchDispatchToProps)(Login);

@@ -2,15 +2,21 @@ import React, { Component } from 'react';
 import {
   View,
   Text,
+  Image,
 } from 'react-native';
 
 class Signup extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      sample: 'sample',
-    }
-  }
+  static navigationOptions = {
+    drawer: () => ({
+      label: 'Signup',
+      icon: ({ tintColor }) => (
+        <Image
+          source={require('../../public/favicon-32x32.png')}
+          style={[styles.icon, {tintColor: tintColor}]}
+        />
+      ),
+    }),
+  };
 
   render() {
     return (

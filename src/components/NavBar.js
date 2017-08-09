@@ -5,23 +5,23 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
-import {
-  StackNavigator,
-} from 'react-navigation';
+
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     flex: 1,
-    backgroundColor: 'orange',
+    backgroundColor: '#342545',
     position: 'absolute',
     top: 0,
     height: '6%',
     width: '100%',
   },
+  header: {
+    height: '100%',
+    width: '100%',
+  },
   drawerButton: {
-    left: '3px',
     backgroundColor: 'white',
-    position: 'absolute',
   },
 });
 
@@ -35,15 +35,17 @@ class NavBar extends Component {
   }
   render() {
     return (
-      <View style={styles.container}>
-        <Button
-          style={styles.drawerButton}
-          primary
-          text="opon drawer"
-          onPress={() => {
-            this.props.navigation.navigate('NavDrawer');
-          }}
-        />
+      <View style={styles.mainContainer}>
+        <View style={styles.header}>
+          <Button
+            style={styles.drawerButton}
+            primary
+            text="opon drawer"
+            onPress={() => {
+              this.props.navigation.navigate('NavDrawer');
+            }}
+          />
+        </View>
       </View>
     );
   }

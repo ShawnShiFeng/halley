@@ -49,11 +49,11 @@ class CodeInput extends Component {
     }
   }
 
-  validatePhoneCode (phoneCode) {
+  validatePhoneCode(phoneCode) {
     if (phoneCode.length === 4) {
       if (!isNaN(parseInt(phoneCode, 10)) && typeof(parseInt(phoneCode, 10)) === 'number') {
         return true;
-      } 
+      }
     }
     return false;
   }
@@ -89,7 +89,7 @@ class CodeInput extends Component {
               onChangeText={
                 firstDigit => {
                   this.setState({ firstDigit });
-                  this.refs.secondInput.focus(); 
+                  this.refs.secondInput.focus();
                 }
               }
               value={this.state.firstDigit}
@@ -103,14 +103,14 @@ class CodeInput extends Component {
               onChangeText={
                 secondDigit => {
                   this.setState({ secondDigit });
-                  this.refs.thirdInput.focus(); 
+                  this.refs.thirdInput.focus();
                   }
               }
               value={this.state.secondDigit}
               maxLength={1}
               ref="secondInput"
-              onSubmitEditing={(event) => { 
-                this.refs.thirdInput.focus(); 
+              onSubmitEditing={(event) => {
+                this.refs.thirdInput.focus();
               }}
             />
           </View>
@@ -120,7 +120,7 @@ class CodeInput extends Component {
               onChangeText={
                 thirdDigit => {
                   this.setState({ thirdDigit });
-                  this.refs.fourthInput.focus(); 
+                  this.refs.fourthInput.focus();
                   }
               }
               value={this.state.thirdDigit}
