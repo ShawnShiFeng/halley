@@ -11,7 +11,11 @@ import {
 } from 'react-native';
 import {
   authenticating,
+  updateUserProfile,
 } from '../actions/session';
+
+//Component
+import Signup from './Signup';
 
 
 class PhoneInput extends Component {
@@ -37,6 +41,8 @@ class PhoneInput extends Component {
       axios.post('http://127.0.0.1:4000/v1/sessions', data)
         .then((response) => {
           console.log('successfully received phone_code validate confirmation: ', response);
+          this.props.updateUserProfile(response.data.user);
+          console.log('result: ', this.props.user.user);
         })
         .catch((err) => {
           console.error('failed to send loop code to the server: ', err);
@@ -150,12 +156,14 @@ class PhoneInput extends Component {
 const mapStateToProps = (state) => {
   return {
     session: state.session,
+    user: state.user,
   };
 };
 
 const matchDispatchToProps = (dispatch) => {
   return bindActionCreators({
     authenticating,
+    updateUserProfile,
   }, dispatch);
 };
 

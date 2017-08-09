@@ -64,11 +64,11 @@ class Halley extends Component {
       transitionConfig: TransitionConfiguration,
     });
     return (
-      <Provider store={store}>
-        <ThemeProvider uiTheme={uiTheme}>
+      <ThemeProvider uiTheme={uiTheme}>
+        <Provider store={store}>
           <RootNav />
-        </ThemeProvider>
-      </Provider>
+        </Provider>
+      </ThemeProvider>
     );
   }
 }

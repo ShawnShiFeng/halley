@@ -3,7 +3,7 @@ import {
   createStore,
 } from 'redux';
 // import { LOGOUT } from '../constants';
-// import user from './user';
+import user from './user';
 // import group from './group';
 // import topic from './topic';
 // import media from './media';
@@ -19,7 +19,7 @@ import session from './session';
 
 const allReducers = combineReducers({
   // banner,
-  // user,
+  user,
   // group,
   // topic,
   // media,
