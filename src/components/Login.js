@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   Image,
+  StatusBar,
 } from 'react-native';
 import {
 } from '../actions/session';
@@ -20,8 +21,11 @@ const styles = StyleSheet.create({
     width: null,
     height: null,
     backgroundColor: 'transparent',
+    resizeMode: 'cover',
   },
   container: {
+    flexDirection: 'column',
+    backgroundColor: 'white',
     width: '100%',
     height: '100%',
   },
@@ -38,16 +42,27 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   picSection: {
-    flex: 3,
+    flex: 4,
     width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  picContainer: {
+    width: '85%',
+    height: '35%',
+    position: 'absolute',
+    bottom: 0,
   },
   textSection: {
     width: '100%',
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bannerText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'Iowan Old Style',
   },
   loginButtonSection: {
     width: '100%',
@@ -68,6 +83,14 @@ const styles = StyleSheet.create({
 class Login extends Component {
   static navigationOptions = {
     headerLeft: null,
+    headerStyle: {
+      backgroundColor: 'transparent',
+      position: 'absolute',
+      height: 50,
+      top: 0,
+      left: 0,
+      right: 0,
+    },
   };
 
   render() {
@@ -77,24 +100,26 @@ class Login extends Component {
       navigation.navigate('App');
     }
     return (
-      <Image source={require('../../public/purple.png')} style={styles.backgroundImage}>
-        <View style={styles.container} >
-          <View style={styles.picSection} >
-            <Text>place holder for picture</Text>
-          </View>
-          <View style={styles.textSection} >
-            <Text style={styles.mainBanner} >LOOP</Text>
-            <Text style={styles.banner} >NOT </Text>
-            <Text style={styles.banner} >Your Facebook Group</Text>
-          </View>
-          <View style={styles.loginButtonSection} >
-            {session.authenticating ?
-              <CodeInput navigation={this.props.navigation} />
-              : <PhoneInput /> }
-            <Text style={styles.signup} >Sign up here</Text>
+      <View style={styles.container} >
+        <View style={styles.picSection} >
+          <View style={styles.picContainer} >
+            <Image
+              style={{ width: '100%', height: '100%' }}
+              source={require('../../public/loop-banner.png')}
+            />
           </View>
         </View>
-      </Image>
+        <View style={styles.textSection}>
+          <Text style={styles.bannerText}>NOT your Facebook group!</Text>
+        </View>
+        <View style={styles.loginButtonSection} >
+          {session.authenticating ?
+            <CodeInput navigation={this.props.navigation} />
+            : <PhoneInput /> }
+          <Text style={styles.signup} >Sign up here</Text>
+        </View>
+      </View>
+
     );
   }
 }
@@ -110,3 +135,8 @@ const matchDispatchToProps = (dispatch) => {
   }, dispatch);
 };
 export default connect(mapStateToProps, matchDispatchToProps)(Login);
+
+
+
+// <Image source={require('../../public/redWallpaper.png')} style={styles.backgroundImage}>
+// </Image>

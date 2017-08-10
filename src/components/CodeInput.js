@@ -43,7 +43,7 @@ class CodeInput extends Component {
           this.props.updateUserProfile(response.data.user);
           this.props.authenticated();
           console.log('user data: ', response);
-          this.props.navigation.navigate('App');
+          this.props.navigation.navigate('Main');
         })
         .catch((err) => {
           console.error('failed to send loop code to the server: ', err);
@@ -78,8 +78,8 @@ class CodeInput extends Component {
         textAlign: 'center',
       },
       banner: {
-        color: 'white',
-      }
+        color: '#FF135D',
+      },
     });
     return (
       <View style={styles.container}>
@@ -87,7 +87,7 @@ class CodeInput extends Component {
         <View style={styles.inputBox}>
           <View style={styles.phoneCodeBox}>
             <TextInput
-              style={{ fontSize: 30, height: 40, borderColor: 'white', borderWidth: 1 }}
+              style={{ fontSize: 30, height: 40, borderColor: 'black', borderWidth: 1 }}
               onChangeText={
                 firstDigit => {
                   this.setState({ firstDigit });
@@ -101,7 +101,7 @@ class CodeInput extends Component {
           </View>
           <View style={styles.phoneCodeBox}>
             <TextInput
-              style={{ fontSize: 30, height: 40, borderColor: 'white', borderWidth: 1 }}
+              style={{ fontSize: 30, height: 40, borderColor: 'black', borderWidth: 1 }}
               onChangeText={
                 secondDigit => {
                   this.setState({ secondDigit });
@@ -118,7 +118,7 @@ class CodeInput extends Component {
           </View>
           <View style={styles.phoneCodeBox}>
             <TextInput
-              style={{ fontSize: 30, height: 40, borderColor: 'white', borderWidth: 1 }}
+              style={{ fontSize: 30, height: 40, borderColor: 'black', borderWidth: 1 }}
               onChangeText={
                 thirdDigit => {
                   this.setState({ thirdDigit });
@@ -132,7 +132,7 @@ class CodeInput extends Component {
           </View>
           <View style={styles.phoneCodeBox}>
             <TextInput
-              style={{ fontSize: 30, height: 40, borderColor: 'white', borderWidth: 1 }}
+              style={{ fontSize: 30, height: 40, borderColor: 'black', borderWidth: 1 }}
               onChangeText={
                 fourthDigit => {
                   this.setState({ fourthDigit });
@@ -149,8 +149,8 @@ class CodeInput extends Component {
         <Button
           onPress={this.sendPhoneCode}
           title="Submit"
-          color="white"
-          backgroundColor="black"
+          color="#FF135D"
+          backgroundColor="#FF135D"
         />
       </View>
     );

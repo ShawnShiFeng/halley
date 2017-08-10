@@ -10,10 +10,9 @@ import store from './reducers/index';
 // Component
 import App from './containers/App';
 import Login from './components/Login';
-import Signup from './components/Signup';
 import Loading from './components/Loading';
-import NavBar from './components/NavBar';
-import NavDrawer from './containers/NavDrawer';
+import Main from './containers/Main';
+import TabNav from './containers/Main';
 
 // uncomment this to hide simulator warnings
 console.disableYellowBox = true;
@@ -62,10 +61,8 @@ class Halley extends Component {
     const RootNav = StackNavigator({
       // Loading: { screen: Loading },
       // Login: { screen: Login },
-      // Signup: { screen: Signup },
-      App: { screen: App },
-      NavBar: { screen: NavBar },
-      NavDrawer: { screen: NavDrawer },
+      Main: { screen: TabNav },
+      // App: { screen: App },
     },
     {
       transitionConfig: TransitionConfiguration,

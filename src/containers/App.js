@@ -4,9 +4,6 @@ import { bindActionCreators } from 'redux';
 import {
   StyleSheet,
   View,
-  Text,
-  Image,
-  Button,
 } from 'react-native';
 import Drawer from 'react-native-drawer';
 import axios from 'axios';
@@ -18,7 +15,6 @@ import {
 import NavBar from '../components/NavBar';
 import Signup from '../components/Signup';
 import ControlPanel from '../components/ControlPanel';
-import NavDrawer from './NavDrawer';
 import GroupMessage from '../components/GroupMessage';
 import DirectMessage from '../components/DirectMessage';
 import ChatBox from '../components/ChatBox';
@@ -107,7 +103,7 @@ class App extends Component {
         .catch((error) => {
           console.error('failed to get list of groups current user is involved in ', error);
         });
-    }
+    };
 
     this.getListUsersInAGroup = () => {
       // local end point: http://127.0.0.1:4000/v1/groups/:id/users
@@ -119,20 +115,20 @@ class App extends Component {
         .catch((error) => {
           console.error('failed to get list of users in a particular group ', error);
         });
-    }
+    };
 
-    // this request is not yet completed, group id needs to be fetched 
+    // this request is not yet completed, group id needs to be fetched
     this.getListsAllGroupTopics = () => {
-    // local end point: /v1/groups/:group_id/topics
-    const url = `http://127.0.0.1:4000/v1/groups/${group.id}/topics`;
-    axios.get(url)
-      .then((response) => {
-        console.log('successfully fetched lists of all group topics ', response);
-      })
-      .catch((error) => {
-        console.error('failed to get lists of all group topics ', error);
-      });
-    }
+      // local end point: /v1/groups/:group_id/topics
+      const url = `http://127.0.0.1:4000/v1/groups/${group.id}/topics`;
+      axios.get(url)
+        .then((response) => {
+          console.log('successfully fetched lists of all group topics ', response);
+        })
+        .catch((error) => {
+          console.error('failed to get lists of all group topics ', error);
+        });
+    };
 
     this.setDrawerType = (type) => {
       this.setState({
@@ -153,8 +149,6 @@ class App extends Component {
     };
   }
 
-
-
   componentDidMount() {
     // this.refreshJWT();
     // this.getListOfGroupsCurrentUserIsInvolved();
@@ -163,48 +157,48 @@ class App extends Component {
   render() {
     const drawerStyles = {
       drawer: {
-        shadowColor: "#000000",
+        shadowColor: '#000000',
         shadowOpacity: 0.8,
         shadowRadius: 0,
-      }
-    }
+      },
+    };
 
     return (
-        <Drawer
-          ref="drawer"
-          onClose={this.onClose}
-          type={this.state.drawerType}
-          animation={this.state.animation}
-          openDrawerOffset={this.state.openDrawerOffset}
-          closedDrawerOffset={this.state.closedDrawerOffset}
-          panOpenMask={this.state.panOpenMask}
-          panCloseMask={this.state.panCloseMask}
-          relativeDrag={this.state.relativeDrag}
-          content={<ControlPanel />}
-          styles={drawerStyles}
-          disabled={this.state.disabled}
-          tweenHandler={this.tweenHandler}
-          tweenDuration={this.state.tweenDuration}
-          tweenEasing={this.state.tweenEasing}
-          acceptDoubleTap={this.state.acceptDoubleTap}
-          acceptTap={this.state.acceptTap}
-          acceptPan={this.state.acceptPan}
-          changeVal={this.state.changeVal}
-          negotiatePan={false}
-          side={this.state.rightSide ? 'right' : 'left'}
-        >
-          <View style={styles.container}>
-            <View style={styles.navBarContainer}>
-              <NavBar navigation={this.props.navigation} openDrawer={this.openDrawer}/>
-            </View>
-            <View style={styles.messageBoxContainer}>
-              <DirectMessage />
-            </View>
-            <View style={styles.chatBoxContainer}>
-              <ChatBox />
-            </View>
+      <Drawer
+        ref="drawer"
+        onClose={this.onClose}
+        type={this.state.drawerType}
+        animation={this.state.animation}
+        openDrawerOffset={this.state.openDrawerOffset}
+        closedDrawerOffset={this.state.closedDrawerOffset}
+        panOpenMask={this.state.panOpenMask}
+        panCloseMask={this.state.panCloseMask}
+        relativeDrag={this.state.relativeDrag}
+        content={<ControlPanel />}
+        styles={drawerStyles}
+        disabled={this.state.disabled}
+        tweenHandler={this.tweenHandler}
+        tweenDuration={this.state.tweenDuration}
+        tweenEasing={this.state.tweenEasing}
+        acceptDoubleTap={this.state.acceptDoubleTap}
+        acceptTap={this.state.acceptTap}
+        acceptPan={this.state.acceptPan}
+        changeVal={this.state.changeVal}
+        negotiatePan={false}
+        side={this.state.rightSide ? 'right' : 'left'}
+      >
+        <View style={styles.container}>
+          <View style={styles.navBarContainer}>
+            <NavBar navigation={this.props.navigation} openDrawer={this.openDrawer}/>
           </View>
-        </Drawer>
+          <View style={styles.messageBoxContainer}>
+            <DirectMessage />
+          </View>
+          <View style={styles.chatBoxContainer}>
+            <ChatBox />
+          </View>
+        </View>
+      </Drawer>
     );
   }
 }
@@ -223,9 +217,3 @@ const matchDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, matchDispatchToProps)(App);
-          /*<View style={styles.messageBox}>
-                <DirectMessage />
-              </View>
-              <View style={styles.chatBox}>
-                <ChatBox />
-              </View>*/
