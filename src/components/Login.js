@@ -22,7 +22,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   container: {
-    // backgroundColor: 'orange',
     width: '100%',
     height: '100%',
   },
@@ -30,8 +29,12 @@ const styles = StyleSheet.create({
     height: '70%',
     width: '170px',
   },
+  mainBanner: {
+    fontSize: 40,
+    color: 'white',
+  },
   banner: {
-    fontSize: 30,
+    fontSize: 25,
     color: 'white',
   },
   picSection: {
@@ -49,7 +52,6 @@ const styles = StyleSheet.create({
   loginButtonSection: {
     width: '100%',
     flex: 3,
-    // backgroundColor: 'orange',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -80,8 +82,9 @@ class Login extends Component {
             <Text>place holder for picture</Text>
           </View>
           <View style={styles.textSection} >
-            <Text style={styles.banner} >GROUP CHAT LOVE</Text>
-            <Text style={styles.banner} >REIMAGINED</Text>
+            <Text style={styles.mainBanner} >LOOP</Text>
+            <Text style={styles.banner} >NOT</Text>
+            <Text style={styles.banner} >Facebook Group</Text>
           </View>
           <View style={styles.loginButtonSection} >
             {session.authenticating ?

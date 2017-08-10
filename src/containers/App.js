@@ -37,13 +37,13 @@ const styles = StyleSheet.create({
   },
   messageBox: {
     top: 0,
-    flex: 14,
+    flex: 11.8,
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
   chatBox: {
-    flex: 1,
+    flex: 1.2,
     width: '100%',
   },
 });
