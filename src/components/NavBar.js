@@ -58,7 +58,7 @@ class NavBar extends Component {
           <View style={styles.headerItem}>
             <TouchableHighlight onPress={() => {this.props.navigation.navigate('NavDrawer');}}>
               <Image
-                style={{ width: 40, height: 40, marginLeft: 10 }}
+                style={{ width: 27, height: 27}}
                 source={require('../../public/ic_list_white_36dp_2x.png')}
               />
             </TouchableHighlight>
@@ -71,7 +71,7 @@ class NavBar extends Component {
           <View style={styles.headerItemRight}>
             <TouchableHighlight onPress={() => { this.props.navigation.navigate('NavDrawer'); }}>
               <Image
-                style={{ width: 27, height: 27, marginRight: 5 }}
+                style={{ width: 25, height: 25, marginRight: 5 }}
                 source={require('../../public/ic_more_vert_white.png')}
               />
             </TouchableHighlight>

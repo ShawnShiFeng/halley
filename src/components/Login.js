@@ -72,6 +72,7 @@ class Login extends Component {
 
   render() {
     const { session, navigation } = this.props;
+    // redirect to the main page once user is logged in
     if (session.authenticated) {
       navigation.navigate('App');
     }
@@ -83,8 +84,8 @@ class Login extends Component {
           </View>
           <View style={styles.textSection} >
             <Text style={styles.mainBanner} >LOOP</Text>
-            <Text style={styles.banner} >NOT</Text>
-            <Text style={styles.banner} >Facebook Group</Text>
+            <Text style={styles.banner} >NOT </Text>
+            <Text style={styles.banner} >Your Facebook Group</Text>
           </View>
           <View style={styles.loginButtonSection} >
             {session.authenticating ?

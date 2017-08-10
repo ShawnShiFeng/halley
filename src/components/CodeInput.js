@@ -33,19 +33,21 @@ class CodeInput extends Component {
     const data = {
       phone_code: `${this.state.firstDigit}${this.state.secondDigit}${this.state.thirdDigit}${this.state.fourthDigit}`,
       phone_number: this.props.session.phoneNumber,
-    }
+    };
     console.log('data: ', data);
-    if(this.validatePhoneCode(data.phone_code)) {
+    if (this.validatePhoneCode(data.phone_code)) {
       axios.post('http://127.0.0.1:4000/v1/sessions', data)
         .then((response) => {
+          axios.defaults.headers.common['Authorization'] = `bearer: ${response.data.token}`;
           console.log('successfully received phone_code validate confirmation: ', response);
           this.props.updateUserProfile(response.data.user);
           this.props.authenticated();
+          console.log('user data: ', response);
           this.props.navigation.navigate('App');
         })
         .catch((err) => {
           console.error('failed to send loop code to the server: ', err);
-        })
+        });
     }
   }
 

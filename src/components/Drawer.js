@@ -9,18 +9,17 @@ export default class DrawerExample extends Component {
   }
 
   closeDrawer() {
-    this.drawer._root.close();
+    this.drawer.close();
   }
   openDrawer() {
-    this.drawer._root.open();
+    this.drawer.open();
   }
 
   render() {
     return (
-      <Drawer
+      <Drawer>
         ref={(ref) => { this.drawer = ref; }}
-        content={<Signup navigator={this.props.navigator} />}
-        onClose={() => this.closeDrawer()} >
+        <Signup />
       </Drawer>
     );
   }
