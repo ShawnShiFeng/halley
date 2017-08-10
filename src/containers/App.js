@@ -27,10 +27,26 @@ import ChatBox from '../components/ChatBox';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexDirection: 'column',
+    width: '100%',
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  navBarContainer: {
+    flex: 1,
+    width: '100%',
+  },
+  messageBoxContainer: {
+    flex: 10,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  chatBoxContainer: {
+    flex: 1,
+    width: '100%',
   },
   welcome: {
     fontSize: 20,
@@ -42,17 +58,6 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 5,
   },
-  messageBox: {
-    top: 0,
-    flex: 11.8,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  chatBox: {
-    flex: 1.2,
-    width: '100%',
-  },
 });
 
 class App extends Component {
@@ -62,6 +67,28 @@ class App extends Component {
   };
   constructor(props) {
     super(props);
+
+    this.state = {
+      drawerType: 'overlay',
+      openDrawerOffset:.3,
+      closedDrawerOffset:0,
+      panOpenMask: .1,
+      panCloseMask: .9,
+      relativeDrag: false,
+      // panStartCompensation: true,
+      // openDrawerThreshold: .25,
+      tweenHandlerOn: false,
+      tweenDuration: 550,
+      tweenEasing: 'easeInOutQuad',
+      disabled: false,
+      tweenHandlerPreset: null,
+      acceptDoubleTap: true,
+      acceptTap: true,
+      acceptPan: true,
+      rightSide: false,
+      showView: true,
+    };
+
     this.refreshJWT = () => {
       axios.get('http://127.0.0.1:4000/v1/sessions/refresh')
         .then((response) => {
@@ -88,15 +115,14 @@ class App extends Component {
       axios.get(url)
         .then((response) => {
           console.log('successfully fetched list of users in a particular group ', response);
-        }
+        })
         .catch((error) => {
           console.error('failed to get list of users in a particular group ', error);
         });
     }
-  }
 
-  // this request is not yet completed, group id needs to be fetched 
-  this.getListsAllGroupTopics = () => {
+    // this request is not yet completed, group id needs to be fetched 
+    this.getListsAllGroupTopics = () => {
     // local end point: /v1/groups/:group_id/topics
     const url = `http://127.0.0.1:4000/v1/groups/${group.id}/topics`;
     axios.get(url)
@@ -106,7 +132,28 @@ class App extends Component {
       .catch((error) => {
         console.error('failed to get lists of all group topics ', error);
       });
+    }
+
+    this.setDrawerType = (type) => {
+      this.setState({
+        drawerType: type
+      });
+    };
+
+    this.openDrawer = () => {
+      this.refs.drawer.open();
+    };
+
+    this.closeDrawer = () => {
+      this.refs.drawer.close();
+    };
+
+    this.setStateFrag = (frag) => {
+      this.setState(frag);
+    };
   }
+
+
 
   componentDidMount() {
     // this.refreshJWT();
@@ -114,21 +161,50 @@ class App extends Component {
   }
 
   render() {
+    const drawerStyles = {
+      drawer: {
+        shadowColor: "#000000",
+        shadowOpacity: 0.8,
+        shadowRadius: 0,
+      }
+    }
+
     return (
-      <View style={styles.container}>
-        <NavBar navigation={this.props.navigation} />
         <Drawer
-          type="overlay"
-          ref={(ref) => { this._drawer = ref; }}
-          content={<View style={{ backgroundColor: 'blue', height: 1000 }} />}
-        />
-        <View style={styles.messageBox}>
-          <DirectMessage />
-        </View>
-        <View style={styles.chatBox}>
-          <ChatBox />
-        </View>
-      </View>
+          ref="drawer"
+          onClose={this.onClose}
+          type={this.state.drawerType}
+          animation={this.state.animation}
+          openDrawerOffset={this.state.openDrawerOffset}
+          closedDrawerOffset={this.state.closedDrawerOffset}
+          panOpenMask={this.state.panOpenMask}
+          panCloseMask={this.state.panCloseMask}
+          relativeDrag={this.state.relativeDrag}
+          content={<ControlPanel />}
+          styles={drawerStyles}
+          disabled={this.state.disabled}
+          tweenHandler={this.tweenHandler}
+          tweenDuration={this.state.tweenDuration}
+          tweenEasing={this.state.tweenEasing}
+          acceptDoubleTap={this.state.acceptDoubleTap}
+          acceptTap={this.state.acceptTap}
+          acceptPan={this.state.acceptPan}
+          changeVal={this.state.changeVal}
+          negotiatePan={false}
+          side={this.state.rightSide ? 'right' : 'left'}
+        >
+          <View style={styles.container}>
+            <View style={styles.navBarContainer}>
+              <NavBar navigation={this.props.navigation} openDrawer={this.openDrawer}/>
+            </View>
+            <View style={styles.messageBoxContainer}>
+              <DirectMessage />
+            </View>
+            <View style={styles.chatBoxContainer}>
+              <ChatBox />
+            </View>
+          </View>
+        </Drawer>
     );
   }
 }
@@ -147,3 +223,9 @@ const matchDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, matchDispatchToProps)(App);
+          /*<View style={styles.messageBox}>
+                <DirectMessage />
+              </View>
+              <View style={styles.chatBox}>
+                <ChatBox />
+              </View>*/

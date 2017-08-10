@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#8A2BE2',
     position: 'absolute',
     top: 0,
-    height: '7.75%',
+    height: '100%',
     width: '100%',
   },
   header: {
@@ -56,9 +56,9 @@ class NavBar extends Component {
       <View style={styles.mainContainer}>
         <View style={styles.header}>
           <View style={styles.headerItem}>
-            <TouchableHighlight onPress={() => {this.props.navigation.navigate('NavDrawer');}}>
+            <TouchableHighlight onPress={this.props.openDrawer}>
               <Image
-                style={{ width: 27, height: 27}}
+                style={{ width: 33, height: 33}}
                 source={require('../../public/ic_list_white_36dp_2x.png')}
               />
             </TouchableHighlight>

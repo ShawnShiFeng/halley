@@ -24,8 +24,8 @@ export default class GroupMessage extends Component {
         height: '100%',
       },
       mainCard: {
-        width: '98%',
-        height: '98%',
+        width: '100%',
+        height: '100%',
       },
     });
 
