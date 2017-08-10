@@ -6,7 +6,7 @@ import {
   Image,
   Button,
 } from 'react-native';
-import Drawer from 'react-native-drawer';
+// import Drawer from 'react-native-drawer';
 
 // Component
 import NavBar from '../components/NavBar';
@@ -16,6 +16,7 @@ import NavDrawer from './NavDrawer';
 import GroupMessage from '../components/GroupMessage';
 import DirectMessage from '../components/DirectMessage';
 import ChatBox from '../components/ChatBox';
+import Drawer from '../components/Drawer';
 
 
 const styles = StyleSheet.create({
@@ -91,6 +92,7 @@ class App extends Component {
         />
         <View style={styles.messageBox}>
           <DirectMessage />
+          {/*<Drawer />*/}
         </View>
         <View style={styles.chatBox}>
           <ChatBox />

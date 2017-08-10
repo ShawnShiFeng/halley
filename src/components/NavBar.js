@@ -8,6 +8,8 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
+import Drawer from '../components/Drawer';
+
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -65,10 +67,14 @@ class NavBar extends Component {
             <Text style={styles.headerText}>Group Name</Text>
           </View>
           <View style={styles.headerItemRight}>
-            <Text>Noti.</Text>
           </View>
           <View style={styles.headerItemRight}>
-
+            <TouchableHighlight onPress={() => { this.props.navigation.navigate('NavDrawer'); }}>
+              <Image
+                style={{ width: 27, height: 27, marginRight: 5 }}
+                source={require('../../public/ic_more_vert_white.png')}
+              />
+            </TouchableHighlight>
           </View>
         </View>
       </View>
