@@ -8,6 +8,7 @@ import {
   ScrollView,
 } from 'react-native';
 import axios from 'axios';
+import { Socket } from 'phoenix';
 import {
   StackNavigator,
 } from 'react-navigation';
@@ -149,30 +150,52 @@ class Groups extends Component {
         finalArr.push(finalObj[key]);
       };
       this.props.updateGroupsJoined(finalArr);
-      console.log('123: ', this.props.group.groups);
     };
 
     this.getAllConversation = (topic_id, topicInfo) => {
       const url = `http://127.0.0.1:4000/v1/topics/${topic_id}/messages`;
       axios.get(url)
         .then((response) => {
-          this.props.updateMessages(response.data.messages);
-          console.log('res: ', response.data.messages);
-          console.log('hi: ', this.props.message.messages);
+          let newMessages = response.data.messages.slice();
+          newMessages.reverse();
+          console.log('newMessages: ', newMessages);
+          this.props.updateMessages(newMessages);
           this.props.navigation.navigate('App', { params: topicInfo, messages: this.props.message.messages });
-
           console.log('successfully fetched all the topic messages: ', response);
         })
         .catch((error) => {
           console.error('failed to fetch messages for a topic: ', error);
         });
-    }
+    };
+
     this.onTopicClick = (topicInfo) => {
-      console.log('event: ', topicInfo);
+      // load all the previous messages for that particular topic
       this.getAllConversation(topicInfo.id, topicInfo);
       this.props.updateCurrentTopicId(topicInfo.id);
+      // opens a channel for that particular topic
+      this.openChannel(this.props.session.socket, topicInfo.id);
+      this.getListsAllGroupsAndTopics();
+    };
+
+    this.openChannel = (socket, topic_id) => {
+      const channel = socket.channel(`topic:${topic_id}`);
+      channel.on('message_created', (message) => {
+        this.updateTopicMessages(message, topic_id);
+
+      });
+      channel.join();
+    };
+
+    this.updateTopicMessages = (message, topic_id) => {
+      let newMessages = this.props.message.messages;
+      newMessages.push(message);
+      console.log('message: ', message);
+      console.log('messages: ', newMessages);
+      this.props.updateMessages(newMessages);
     };
   }
+
+
 
   componentDidMount() {
     this.getListsAllGroupsAndTopics();
@@ -202,6 +225,7 @@ const mapStateToProps = (state) => {
   return {
     group: state.group,
     message: state.message,
+    session: state.session,
   };
 };
 

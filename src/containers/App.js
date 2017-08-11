@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import Drawer from 'react-native-drawer';
 import axios from 'axios';
+import { Socket } from 'phoenix';
 import {
   updateUserProfile,
 } from '../actions/user';
@@ -166,15 +167,9 @@ class App extends Component {
           console.error('failed to send message ', error);
         });
     }
-
-
-
   }
 
-
   componentDidMount() {
-    // this.refreshJWT();
-    // this.getListOfGroupsCurrentUserIsInvolved();
   }
 
   render() {

@@ -68,9 +68,6 @@ class ChatBox extends Component {
             />
           </View>
           <View style={styles.submitArea}>
-            {
-              console.log('hahaha',this.props.topicInfo)
-            }
             <TouchableHighlight onPress={() => {
               this.props.submitMessage(this.state.text, this.props.group.current_topic_id);
               this.setState({

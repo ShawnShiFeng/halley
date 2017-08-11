@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { Socket } from 'phoenix';
 import axios from 'axios';
 import {
   View,
@@ -11,6 +12,8 @@ import {
 } from 'react-native';
 import {
   authenticated,
+  updateToken,
+  updateSocket,
 } from '../actions/session';
 import {
   updateUserProfile,
@@ -27,6 +30,7 @@ class CodeInput extends Component {
     };
     this.sendPhoneCode = this.sendPhoneCode.bind(this);
     this.validatePhoneCode = this.validatePhoneCode.bind(this);
+    this.startSocket = this.startSocket.bind(this);
   }
 
   sendPhoneCode() {
@@ -38,16 +42,31 @@ class CodeInput extends Component {
     if (this.validatePhoneCode(data.phone_code)) {
       axios.post('http://127.0.0.1:4000/v1/sessions', data)
         .then((response) => {
+          this.props.updateToken(response.data.token);
           axios.defaults.headers.common['Authorization'] = `Bearer: ${response.data.token}`;
           console.log('successfully received phone_code validate confirmation: ', response);
           this.props.updateUserProfile(response.data.user);
           this.props.authenticated();
+          this.startSocket();
           this.props.navigation.navigate('Main');
         })
         .catch((err) => {
           console.error('failed to send loop code to the server: ', err);
         });
     }
+  }
+  startSocket() {
+    const token = this.props.session.token;
+    const url = 'ws://127.0.0.1:4000/socket';
+    const socket = new Socket(url, {
+      params: { token },
+    });
+    socket.onOpen(event => console.log('Connected.'));
+    socket.onError(event => console.error('Cannot connect.'));
+    socket.onClose(event => console.log('Goodbye.'));
+
+    socket.connect();
+    this.props.updateSocket(socket);
   }
 
   validatePhoneCode(phoneCode) {
@@ -167,6 +186,8 @@ const matchDispatchToProps = (dispatch) => {
   return bindActionCreators({
     authenticated,
     updateUserProfile,
+    updateToken,
+    updateSocket,
   }, dispatch);
 };
 

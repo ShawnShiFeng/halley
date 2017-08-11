@@ -22,6 +22,8 @@ const initialState = {
   phoneNumber: '',
   authenticated: false,
   authenticating: false,
+  token: '',
+  socket: {},
   // serverError: false,
   // userId: null,
   // socket: null,
@@ -53,6 +55,18 @@ export default function (state = initialState, action) {
         authenticating: false,
         authenticated: true,
       };
+    }
+    case 'UPDATE_TOKEN': {
+      return {
+        ...state,
+        token: action.token,
+      };
+    }
+    case 'UPDATE_SOCKET': {
+      return {
+        ...state,
+        socket: action.socket,
+      }
     }
     // case LOGIN: {
     //   const user = action.response.entities.users[action.response.result];

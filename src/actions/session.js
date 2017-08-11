@@ -10,3 +10,17 @@ export const authenticated = () => {
     type: 'AUTHENTICATED',
   };
 };
+
+export const updateToken = (token) => {
+  return {
+    type: 'UPDATE_TOKEN',
+    token,
+  };
+};
+
+export const updateSocket = (socket) => {
+  return {
+    type: 'UPDATE_SOCKET',
+    socket,
+  };
+};
