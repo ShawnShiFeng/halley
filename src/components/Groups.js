@@ -9,12 +9,20 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import {
+  StackNavigator,
+} from 'react-navigation';
+import {
   updateGroupsJoined,
+  updateCurrentTopicId,
 } from '../actions/group';
+import {
+  updateMessages,
+} from '../actions/message';
 
 // Components
 import GroupsContent from './GroupsContent';
 import GroupsNavbar from './GroupsNavbar';
+import App from '../containers/App';
 
 const styles = StyleSheet.create({
   icon: {
@@ -58,7 +66,6 @@ class Groups extends Component {
   }
   constructor(props) {
     super(props);
-
     this.refreshJWT = () => {
       axios.get('http://127.0.0.1:4000/v1/sessions/refresh')
         .then((response) => {
@@ -120,7 +127,6 @@ class Groups extends Component {
       let array = [];
       let finalObj = {};
       let finalArr = [];
-
       for (let i = 0; i < arr.length; i += 1) {
         let obj = {};
         let temp = {};
@@ -132,7 +138,6 @@ class Groups extends Component {
         temp.name = obj.groupName;
         array.push(temp);
       }
-
       for (let j = 0; j < array.length; j += 1) {
         if (finalObj.hasOwnProperty(array[j].name)) {
           finalObj[array[j].name].topics.push(array[j].obj.topics[0]);
@@ -140,13 +145,32 @@ class Groups extends Component {
           finalObj[array[j].name] = array[j].obj;
         }
       }
-
       for (let key in finalObj){
         finalArr.push(finalObj[key]);
       };
-
       this.props.updateGroupsJoined(finalArr);
       console.log('123: ', this.props.group.groups);
+    };
+
+    this.getAllConversation = (topic_id, topicInfo) => {
+      const url = `http://127.0.0.1:4000/v1/topics/${topic_id}/messages`;
+      axios.get(url)
+        .then((response) => {
+          this.props.updateMessages(response.data.messages);
+          console.log('res: ', response.data.messages);
+          console.log('hi: ', this.props.message.messages);
+          this.props.navigation.navigate('App', { params: topicInfo, messages: this.props.message.messages });
+
+          console.log('successfully fetched all the topic messages: ', response);
+        })
+        .catch((error) => {
+          console.error('failed to fetch messages for a topic: ', error);
+        });
+    }
+    this.onTopicClick = (topicInfo) => {
+      console.log('event: ', topicInfo);
+      this.getAllConversation(topicInfo.id, topicInfo);
+      this.props.updateCurrentTopicId(topicInfo.id);
     };
   }
 
@@ -162,7 +186,11 @@ class Groups extends Component {
         </View>
         <View style={styles.groupsContainer}>
           <ScrollView style={styles.scrollView}>
-            {this.props.group.groups !== [] ? <GroupsContent groupsAndTopics={this.props.group.groups} /> : null}
+            {this.props.group.groups !== []
+              ? <GroupsContent
+                groupsAndTopics={this.props.group.groups}
+                onTopicClick={this.onTopicClick}
+              /> : null}
           </ScrollView>
         </View>
       </View>
@@ -173,12 +201,15 @@ class Groups extends Component {
 const mapStateToProps = (state) => {
   return {
     group: state.group,
+    message: state.message,
   };
 };
 
 const matchDispatchToProps = (dispatch) => {
   return bindActionCreators({
+    updateMessages,
     updateGroupsJoined,
+    updateCurrentTopicId,
   }, dispatch);
 };
 export default connect(mapStateToProps, matchDispatchToProps)(Groups);

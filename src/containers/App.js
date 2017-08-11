@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: '#FF135D',
   },
   navBarContainer: {
     flex: 1,
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   instructions: {
     textAlign: 'center',
-    color: '#333333',
+    color: '#FF135D',
     marginBottom: 5,
   },
 });
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
 class App extends Component {
   static navigationOptions = {
     title: 'Welcome',
-    headerLeft: null,
+    // headerLeft: null,
   };
   constructor(props) {
     super(props);
@@ -147,7 +147,30 @@ class App extends Component {
     this.setStateFrag = (frag) => {
       this.setState(frag);
     };
+
+    this.submitMessage = (text, topic_id) => {
+      console.log('message to be sent: ', text, 'id: ', topic_id);
+      this.sendMessageOut(text, topic_id);
+    };
+
+    this.sendMessageOut = (message, topic_id) => {
+      const url = `http://127.0.0.1:4000/v1/topics/${topic_id}/messages`;
+      const data = {
+        text: message,
+      };
+      axios.post(url, data)
+        .then((response) => {
+          console.log('successfully sent one messsage ', response);
+        })
+        .catch((error) => {
+          console.error('failed to send message ', error);
+        });
+    }
+
+
+
   }
+
 
   componentDidMount() {
     // this.refreshJWT();
@@ -189,13 +212,23 @@ class App extends Component {
       >
         <View style={styles.container}>
           <View style={styles.navBarContainer}>
-            <NavBar navigation={this.props.navigation} openDrawer={this.openDrawer}/>
+            <NavBar
+              topicInfo={this.props.navigation.state.params}
+              navigation={this.props.navigation}
+              openDrawer={this.openDrawer}
+            />
           </View>
           <View style={styles.messageBoxContainer}>
-            <DirectMessage />
+            <GroupMessage
+              topicInfo={this.props.navigation.state.params}
+              messages={this.props.message.messages}
+            />
           </View>
           <View style={styles.chatBoxContainer}>
-            <ChatBox />
+            <ChatBox
+              topicInfo={this.props.group}
+              submitMessage={this.submitMessage}
+            />
           </View>
         </View>
       </Drawer>
@@ -207,6 +240,8 @@ const mapStateToProps = (state) => {
   return {
     session: state.session,
     user: state.user,
+    message: state.message,
+    group: state.group,
   };
 };
 

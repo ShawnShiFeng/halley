@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import {
   View,
   Text,
@@ -102,7 +100,11 @@ class GroupsContent extends Component {
                   group.topics.map((topic) => {
                     return (
                       <View>
-                        <GroupsContentTopicEntry topicName={topic.topicName} />
+                        <GroupsContentTopicEntry
+                          topicName={topic.topicName}
+                          onTopicClick={this.props.onTopicClick}
+                          topicInfo={topic}
+                        />
                       </View>
                     );
                   })
@@ -116,15 +118,4 @@ class GroupsContent extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-    group: state.group,
-  };
-};
-
-const matchDispatchToProps = (dispatch) => {
-  return bindActionCreators({
-  }, dispatch);
-};
-
-export default connect(mapStateToProps, matchDispatchToProps)(GroupsContent);
+export default GroupsContent;

@@ -62,7 +62,7 @@ class Halley extends Component {
       Loading: { screen: Loading },
       Login: { screen: Login },
       Main: { screen: TabNav },
-      // App: { screen: App },
+      App: { screen: App },
     },
     {
       transitionConfig: TransitionConfiguration,

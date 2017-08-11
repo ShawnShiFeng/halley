@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
   Image,
+  TouchableHighlight,
 } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -33,7 +34,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const GroupsContentTopicEntry = ({ topicName }) => (
+const GroupsContentTopicEntry = ({ topicInfo, topicName, onTopicClick }) => (
   <View style={styles.mainContainer}>
     <View style={styles.hashtagContainer}>
       <Image
@@ -42,7 +43,9 @@ const GroupsContentTopicEntry = ({ topicName }) => (
       />
     </View>
     <View style={styles.topicNameEntryContainer}>
-      <Text style={styles.topicNameEntryText}>{topicName}</Text>
+      <TouchableHighlight onPress={() => { onTopicClick(topicInfo); }}>
+        <Text style={styles.topicNameEntryText}>{topicName}</Text>
+      </TouchableHighlight>
     </View>
   </View>
 );

@@ -11,8 +11,9 @@
 
 const initialState = {
   groups: [],
-  groupIds: [],
-  filteredIds: [],
+  current_topic_id: 0,
+  // groupIds: [],
+  // filteredIds: [],
 };
 
 export default function (state = initialState, action) {
@@ -21,6 +22,11 @@ export default function (state = initialState, action) {
       return {
         ...state,
         groups: action.groups,
+      };
+    case 'UPDATE_CURRENT_TOPIC_ID':
+      return {
+        ...state,
+        current_topic_id: action.current_topic_id,
       };
     // case FETCH_TOPICS_SUCCESS:
     //   return {

@@ -11,7 +11,7 @@ import group from './group';
 // import banner from './banner';
 // import search from './search';
 import session from './session';
-// import message from './message';
+import message from './message';
 // import attachment from './attachment';
 // import settings from './settings';
 // import notification from './notification';
@@ -26,7 +26,7 @@ const allReducers = combineReducers({
   // modal,
   // search,
   session,
-  // message,
+  message,
   // attachment,
   // settings,
   // notification,

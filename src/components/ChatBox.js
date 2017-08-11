@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   View,
   Image,
@@ -10,7 +12,7 @@ import {
   Card,
 } from 'react-native-material-design';
 
-export default class ChatBox extends Component {
+class ChatBox extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -25,7 +27,7 @@ export default class ChatBox extends Component {
         height: '100%',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#8A2BE2',
+        backgroundColor: '#FF135D',
       },
       mainCard: {
         width: '100%',
@@ -66,7 +68,17 @@ export default class ChatBox extends Component {
             />
           </View>
           <View style={styles.submitArea}>
-            <TouchableHighlight onPress={() => this.submitMessage}>
+            {
+              console.log('hahaha',this.props.topicInfo)
+            }
+            <TouchableHighlight onPress={() => {
+              this.props.submitMessage(this.state.text, this.props.group.current_topic_id);
+              this.setState({
+                text: '',
+                height: 35,
+              });
+            }}
+            >
               <Image
                 style={{ width: 25, height: 25 }}
                 source={require('../../public/ic_send_48pt_2x.png')}
@@ -78,3 +90,15 @@ export default class ChatBox extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    group: state.group,
+  };
+};
+
+const matchDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+  }, dispatch);
+};
+export default connect(mapStateToProps, matchDispatchToProps)(ChatBox);

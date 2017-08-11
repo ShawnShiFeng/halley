@@ -8,14 +8,11 @@ import {
   TouchableHighlight,
 } from 'react-native';
 
-import Drawer from '../components/Drawer';
-
-
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     // backgroundColor: '#342545',
-    backgroundColor: '#8A2BE2',
+    backgroundColor: '#FF135D',
     position: 'absolute',
     top: 0,
     height: '100%',
@@ -64,7 +61,8 @@ class NavBar extends Component {
             </TouchableHighlight>
           </View>
           <View style={styles.headerItem}>
-            <Text style={styles.headerText}>Group Name</Text>
+
+              <Text style={styles.headerText}>Topic Chat</Text>
           </View>
           <View style={styles.headerItemRight}>
           </View>
@@ -83,3 +81,8 @@ class NavBar extends Component {
 }
 
 export default NavBar;
+
+          //  {this.props.topicInfo.topicName
+          //     ? <Text style={styles.headerText}>
+          //       {this.props.topicInfo.topicName}
+          //     </Text> : <Text style={styles.headerText}>Topic Chat</Text>}

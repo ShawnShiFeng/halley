@@ -4,3 +4,10 @@ export const updateGroupsJoined = (groups) => {
     groups,
   };
 };
+
+export const updateCurrentTopicId = (id) => {
+  return {
+    type: 'UPDATE_CURRENT_TOPIC_ID',
+    current_topic_id: id,
+  };
+};
