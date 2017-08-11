@@ -59,8 +59,8 @@ class Halley extends Component {
   }
   render() {
     const RootNav = StackNavigator({
-      // Loading: { screen: Loading },
-      // Login: { screen: Login },
+      Loading: { screen: Loading },
+      Login: { screen: Login },
       Main: { screen: TabNav },
       // App: { screen: App },
     },

@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   bannerText: {
     fontSize: 20,
     fontWeight: 'bold',
-    fontFamily: 'Iowan Old Style',
+    fontFamily: 'Avenir',
   },
   loginButtonSection: {
     width: '100%',
@@ -135,8 +135,3 @@ const matchDispatchToProps = (dispatch) => {
   }, dispatch);
 };
 export default connect(mapStateToProps, matchDispatchToProps)(Login);
-
-
-
-// <Image source={require('../../public/redWallpaper.png')} style={styles.backgroundImage}>
-// </Image>

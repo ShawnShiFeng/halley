@@ -4,7 +4,7 @@ import {
 } from 'redux';
 // import { LOGOUT } from '../constants';
 import user from './user';
-// import group from './group';
+import group from './group';
 // import topic from './topic';
 // import media from './media';
 // import modal from './modal';
@@ -20,7 +20,7 @@ import session from './session';
 const allReducers = combineReducers({
   // banner,
   user,
-  // group,
+  group,
   // topic,
   // media,
   // modal,

@@ -14,13 +14,15 @@ const styles = StyleSheet.create({
     // borderWidth: 1,
   },
   topicNameEntryContainer: {
+    marginLeft: 10,
     justifyContent: 'center',
     alignItems: 'flex-start',
+    borderBottomColor: '#F8F8FF',
+    borderBottomWidth: 1,
     flex: 10,
     // borderWidth: 1,
   },
   topicNameEntryText: {
-    marginLeft: 10,
     fontSize: 15,
   },
   hashtagContainer: {

@@ -49,6 +49,27 @@ const dummyProps = [
       },
     ],
   },
+  {
+    groupName: 'LoopSideProject',
+    topics: [
+      {
+        topicName: 'react native',
+        id: '4',
+      },
+      {
+        topicName: 'general',
+        id: '5',
+      },
+      {
+        topicName: 'blockchain',
+        id: '6',
+      },
+      {
+        topicName: 'crypto',
+        id: '7',
+      },
+    ],
+  },
 ];
 
 export default class GroupsContent extends Component {
@@ -64,6 +85,7 @@ export default class GroupsContent extends Component {
       },
       topicsContainer: {
         width: '100%',
+        marginLeft: 10,
       },
     });
     return (
@@ -71,7 +93,7 @@ export default class GroupsContent extends Component {
         {dummyProps.map((group) => {
           return (
             <View>
-              <Text>{group.groupName}</Text>
+              <GroupsContentNameEntry groupName={group.groupName} />
               <View style={styles.topicsContainer}>
                 {
                   group.topics.map((topic) => {
