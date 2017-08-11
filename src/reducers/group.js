@@ -10,7 +10,7 @@
 // } from '../constants';
 
 const initialState = {
-  groups: {},
+  groups: [],
   groupIds: [],
   filteredIds: [],
 };

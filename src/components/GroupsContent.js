@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   View,
   Text,
@@ -72,7 +74,7 @@ const dummyProps = [
   },
 ];
 
-export default class GroupsContent extends Component {
+class GroupsContent extends Component {
   static navigationOptions = {
     headerLeft: null,
   };
@@ -90,7 +92,8 @@ export default class GroupsContent extends Component {
     });
     return (
       <View style={styles.mainContainer}>
-        {dummyProps.map((group) => {
+
+        {this.props.groupsAndTopics.map((group) => {
           return (
             <View>
               <GroupsContentNameEntry groupName={group.groupName} />
@@ -113,3 +116,15 @@ export default class GroupsContent extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    group: state.group,
+  };
+};
+
+const matchDispatchToProps = (dispatch) => {
+  return bindActionCreators({
+  }, dispatch);
+};
+
+export default connect(mapStateToProps, matchDispatchToProps)(GroupsContent);

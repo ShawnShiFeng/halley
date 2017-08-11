@@ -104,10 +104,54 @@ class Groups extends Component {
           console.error('failed to get lists of all group topics ', error);
         });
     };
+
+    this.getListsAllGroupsAndTopics = () => {
+      axios.get('http://127.0.0.1:4000/v1/topics')
+        .then((response) => {
+          this.sortGroupsAndTopics(response.data.topics);
+          console.log('successfully fetched lists of all groups and all topics ', response);
+        })
+        .catch((error) => {
+          console.error('failed to get lists of all groups and all topics ', error);
+        });
+    };
+
+    this.sortGroupsAndTopics = (arr) => {
+      let array = [];
+      let finalObj = {};
+      let finalArr = [];
+
+      for (let i = 0; i < arr.length; i += 1) {
+        let obj = {};
+        let temp = {};
+        obj.topics = [];
+        obj.groupName = arr[i].group.name;
+        obj.groupId = arr[i].group_id;
+        obj.topics[0] = { topicName: arr[i].name, id: arr[i].id, },
+        temp.obj = obj;
+        temp.name = obj.groupName;
+        array.push(temp);
+      }
+
+      for (let j = 0; j < array.length; j += 1) {
+        if (finalObj.hasOwnProperty(array[j].name)) {
+          finalObj[array[j].name].topics.push(array[j].obj.topics[0]);
+        } else {
+          finalObj[array[j].name] = array[j].obj;
+        }
+      }
+
+      for (let key in finalObj){
+        finalArr.push(finalObj[key]);
+      };
+
+      this.props.updateGroupsJoined(finalArr);
+      console.log('123: ', this.props.group.groups);
+    };
   }
 
   componentDidMount() {
-    this.getListsGroupsThatUserIsAMemberOf();
+    this.getListsAllGroupsAndTopics();
   }
 
   render() {
@@ -118,7 +162,7 @@ class Groups extends Component {
         </View>
         <View style={styles.groupsContainer}>
           <ScrollView style={styles.scrollView}>
-            <GroupsContent />
+            {this.props.group.groups !== [] ? <GroupsContent groupsAndTopics={this.props.group.groups} /> : null}
           </ScrollView>
         </View>
       </View>
